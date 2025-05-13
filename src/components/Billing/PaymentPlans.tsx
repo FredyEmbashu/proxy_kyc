@@ -50,6 +50,7 @@ const PricingAndPlans: React.FC = () => {
 
   const handleChoosePlan = (planName: string) => {
     console.log(`Selected plan: ${planName}`);
+    // Updated to use the correct route path
     navigate('/make-payment', { state: { plan: planName } });
   };
 
@@ -159,5 +160,71 @@ const PricingAndPlans: React.FC = () => {
     </Box>
   );
 };
+
+// const PaymentPlans: React.FC = () => {
+//   const navigate = useNavigate();
+
+//   return (
+//     <Box sx={{ p: 3 }}>
+//       <Typography variant="h4" gutterBottom>
+//         Payment Plans
+//       </Typography>
+//       <Box sx={{ 
+//         display: 'flex', 
+//         flexDirection: { xs: 'column', md: 'row' }, 
+//         justifyContent: 'space-between', 
+//         gap: 3 
+//       }}>
+//         {[
+//           { name: 'Basic', price: 1999, description: 'Includes basic verification features.' },
+//           { name: 'Standard', price: 2499, description: 'All basic features plus advanced analytics.' },
+//           { name: 'Premium', price: 3990, description: 'Includes all features with priority support.' }
+//         ].map((plan, idx) => (
+//           <Paper 
+//             key={idx} 
+//             sx={{ 
+//               p: 3, 
+//               flex: 1, 
+//               borderRadius: '12px', 
+//               boxShadow: 3, 
+//               transition: 'transform 0.3s ease-in-out', 
+//               '&:hover': { 
+//                 transform: 'scale(1.05)', 
+//                 boxShadow: 8 
+//               } 
+//             }}
+//           >
+//             <Typography variant="h6" sx={{ fontWeight: 700 }}>
+//               {plan.name} Plan
+//             </Typography>
+//             <Typography variant="body1" sx={{ fontSize: '1.5rem', fontWeight: 600 }}>
+//               N${plan.price}/month
+//             </Typography>
+//             <Typography variant="body2" sx={{ mb: 2 }}>
+//               {plan.description}
+//             </Typography>
+//             <Button 
+//               variant="contained" 
+//               color="primary" 
+//               sx={{ mt: 2 }}
+//               onClick={() => navigate('/make-payment', { state: { plan: plan.name } })}
+//             >
+//               Choose Plan
+//             </Button>
+//           </Paper>
+//         ))}
+//       </Box>
+//     </Box>
+//   );
+// };
+
+// const PricingPage: React.FC = () => {
+//   return (
+//     <Box>
+//       <PricingAndPlans/>
+//       {/* PaymentPlans component removed */}
+//     </Box>
+//   );
+// };
 
 export default PricingAndPlans;
