@@ -218,13 +218,13 @@ const PricingAndPlans: React.FC = () => {
 //   );
 // };
 
-const PricingPage: React.FC = () => {
-  return (
-    <Box>
-      <PricingAndPlans/>
-      {/* PaymentPlans component removed */}
-    </Box>
-  );
-};
+// const PricingPage: React.FC = () => {
+//   return (
+//     <Box>
+//       <PricingAndPlans/>
+//       {/* PaymentPlans component removed */}
+//     </Box>
+//   );
+// };
 
 export default PricingAndPlans;
