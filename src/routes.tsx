@@ -17,7 +17,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 
 import RequestVerification from './components/KYC/RequestVerification';
 
-import PricingAndPlans from './components/Billing/PaymentPlans';
+import PricingAndPlans from './components/Pricing/PricingAndPlans';
 import RiskScoring from './components/Analysis/RiskScoring';
 import NotificationCenter from './components/Notifications/NotificationCenter';
 import DigitalSignature from './components/Security/DigitalSignature';
