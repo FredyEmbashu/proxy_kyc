@@ -31,6 +31,15 @@ const ForgotPassword: React.FC = () => {
       
       // Always succeed in demo
       setSuccess(true);
+      
+      // In a real implementation, you would call your backend API here
+      // const response = await fetch('/api/auth/forgot-password', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email })
+      // });
+      // if (!response.ok) throw new Error('Failed to send reset email');
+      // setSuccess(true);
     } catch (err) {
       setError('An error occurred. Please try again.');
     } finally {
