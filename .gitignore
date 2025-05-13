@@ -1,6 +1,13 @@
 # dependencies
 /node_modules
-/.pnp
+/server/node_modules
+
+# environment variables
+.env
+/server/.env
+
+# other files to ignore
+.pnp
 .pnp.js
 
 # testing

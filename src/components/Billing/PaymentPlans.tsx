@@ -221,7 +221,7 @@ const PricingAndPlans: React.FC = () => {
   return (
     <Box>
       <PricingPage />
-      <PaymentPlans />
+      {/* PaymentPlans component removed */}
     </Box>
   );
 };

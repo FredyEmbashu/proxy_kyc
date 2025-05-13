@@ -1,43 +1,20 @@
-import React, { useEffect } from 'react';
-import { Box, CssBaseline } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-// import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import React from 'react';
+import { Box, Container } from '@mui/material';
+import Header from './Header';
+import HomeButton from '../common/HomeButton';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    // Check if user is authenticated
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    
-    // If not authenticated, redirect to login
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      {/* <Navbar />
-      <Sidebar /> */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - 240px)` },
-          ml: { sm: '240px' },
-          mt: '64px'
-        }}
-      >
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Header />
+      <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
         {children}
-      </Box>
+      </Container>
+      <HomeButton position="bottom-right" />
     </Box>
   );
 };

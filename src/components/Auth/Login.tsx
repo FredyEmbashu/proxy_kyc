@@ -14,11 +14,13 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 import { authService } from '../../services/authService';
+import HomeButton from '../common/HomeButton';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual');
@@ -37,7 +39,20 @@ const Login: React.FC = () => {
       if (result.success) {
         // Store account type preference
         localStorage.setItem('preferredAccountType', accountType);
-        navigate('/dashboard');
+        
+        // Check if there's a redirect path from the location state
+        const from = location.state?.from || '/dashboard';
+        
+        // Check if there was a selected plan before login
+        const selectedPlan = sessionStorage.getItem('selectedPlan');
+        if (selectedPlan) {
+          sessionStorage.removeItem('selectedPlan');
+          // Redirect to payment page with the selected plan
+          navigate('/make-payment', { state: { planId: selectedPlan } });
+        } else {
+          // Otherwise, redirect to the intended destination
+          navigate(from);
+        }
       } else {
         setError(result.message || 'Login failed');
       }

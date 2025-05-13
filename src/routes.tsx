@@ -29,6 +29,7 @@ import FingerPrintCapture from './components/Biometrics/FingerPrintCapture';
 import VerificationProcess from './pages/VerificationProcess';
 // import RequestVerification from './pages/RequestVerification';
 import BiometricVerification from './pages/BiometricVerification';
+import Profile from './components/Profile/Profile';
 
 // Additional imports for all routes
 import About from './components/About/About';
@@ -44,6 +45,10 @@ import MakePayment from './components/Billing/MakePaymen';
 // Add this import with your other imports
 import DocumentVerificationTest from './pages/DocumentVerificationTest';
 
+// Add these imports at the top of your routes.tsx file
+import UserManagement from './components/Admin/UserManagement';
+// import UserProfile from './components/Admin/UserProfile';
+
 const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
 
@@ -52,82 +57,90 @@ const AppRoutes: React.FC = () => {
     navigate('/risk-scoring');
   };
 
+  // Wrap components with Layout to ensure consistent navigation
+  const withLayout = (Component: React.ComponentType<any>, props?: any) => (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  );
+
   return (
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<Welcome />} />
+      <Route path="/welcome" element={<Welcome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/request-verification" element={<RequestVerification />} />
       <Route path="/verify/:verificationId" element={<VerificationProcess />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/pricing-plans" element={<PricingAndPlans />} /> 
+      
       {/* Information Pages */}
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/services" element={<Services />} />
-      <Route path="/pricingpage" element={<Layout><PricingAndPlans /></Layout>} />
+      <Route path="/pricingpage" element={withLayout(PricingAndPlans)} />
+      
+      {/* Admin Routes */}
+      <Route path="/admin/users" element={withLayout(UserManagement)} />
+      {/* <Route path="/admin/users/:userId" element={withLayout(UserProfile)} /> */}
+      <Route path="/admin/users/:userId/edit" element={withLayout(Profile)} />
       
       {/* Legal Pages */}
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      {/* {<Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/data-protection" element={<DataProtection />} />
-      <Route path="/compliance" element={<Compliance />} /> } */}
       
       {/* Business Routes */}
-      <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-      <Route path="/business-dashboard" element={<Layout><BusinessDashboard /></Layout>} />
-      <Route path="/verification-requests" element={<Layout><VerificationRequests /></Layout>} />
-      <Route path="/analytics-dashboard" element={<Layout><AnalyticsDashboard /></Layout>} />
-      <Route path="/analytics" element={<Layout><AnalyticsDashboard /></Layout>} />
+      <Route path="/dashboard" element={withLayout(Dashboard)} />
+      <Route path="/business-dashboard" element={withLayout(BusinessDashboard)} />
+      <Route path="/verification-requests" element={withLayout(VerificationRequests)} />
+      <Route path="/analytics-dashboard" element={withLayout(AnalyticsDashboard)} />
+      <Route path="/analytics" element={withLayout(AnalyticsDashboard)} />
       
       {/* Verification Process Routes */}
-      <Route path="/verify-client" element={<Layout><Dashboard /></Layout>} />
-      <Route path="/get-verified" element={<Layout><PersonalInfo /></Layout>} />
-      <Route path="/documents" element={<Layout><DocumentUpload /></Layout>} />
-      <Route path="/verification-process" element={<Layout><VerificationProcess /></Layout>} />
+      <Route path="/verify-client" element={withLayout(Dashboard)} />
+      <Route path="/get-verified" element={withLayout(PersonalInfo)} />
+      <Route path="/documents" element={withLayout(DocumentUpload)} />
+      <Route path="/verification-process" element={withLayout(VerificationProcess)} />
       
       {/* Biometric Verification Routes */}
       <Route path="/face-verification" element={
-        <Layout><FaceCapture onCapture={handleBiometricCapture} /></Layout>
+        withLayout(FaceCapture, { onCapture: handleBiometricCapture })
       } />
-      <Route path="/iris-scan" element={<Layout><IrisScanning /></Layout>} />
-      <Route path="/fingerprint" element={<Layout><FingerPrintCapture /></Layout>} />
-      <Route path="/biometric-verification" element={<Layout><BiometricVerification /></Layout>} />
+      <Route path="/iris-scan" element={withLayout(IrisScanning)} />
+      <Route path="/fingerprint" element={withLayout(FingerPrintCapture)} />
+      <Route path="/biometric-verification" element={withLayout(BiometricVerification)} />
       
       {/* Additional Verification Sources */}
-      <Route path="/social-media" element={<Layout><SocialMediaVerification /></Layout>} />
-      <Route path="/web-analysis" element={<Layout><WebDataAnalysis /></Layout>} />
+      <Route path="/social-media" element={withLayout(SocialMediaVerification)} />
+      <Route path="/web-analysis" element={withLayout(WebDataAnalysis)} />
       
       {/* Risk Assessment Routes */}
-      <Route path="/risk-scoring" element={<Layout><RiskScoring /></Layout>} />
+      <Route path="/risk-scoring" element={withLayout(RiskScoring)} />
       
       {/* Business Features */}
-      <Route path="/payment-plans" element={<Layout><PricingAndPlans /></Layout>} />
-      <Route path="/notifications" element={<Layout><NotificationCenter /></Layout>} />
-      <Route path="/digital-signature" element={<Layout><DigitalSignature /></Layout>} />
+      <Route path="/payment-plans" element={withLayout(PricingAndPlans)} />
+      <Route path="/notifications" element={withLayout(NotificationCenter)} />
+      <Route path="/digital-signature" element={withLayout(DigitalSignature)} />
       
       {/* Completion Routes */}
-      <Route path="/verification-complete" element={<Layout><VerificationComplete /></Layout>} />
-      <Route path="/verification-report/:id" element={<Layout><VerificationComplete /></Layout>} />
+      <Route path="/verification-complete" element={withLayout(VerificationComplete)} />
+      <Route path="/verification-report/:id" element={withLayout(VerificationComplete)} />
       
       {/* Service-specific routes */}
-      <Route path="/services/individual-verification" element={<Layout><PersonalInfo /></Layout>} />
-      <Route path="/services/business-verification" element={<Layout><BusinessDashboard /></Layout>} />
-      <Route path="/services/rapid-verification" element={<Layout><VerificationProcess /></Layout>} />
-      <Route path="/services/document-authentication" element={<Layout><DocumentUpload /></Layout>} />
-      <Route path="/make-payments" element={<Layout><MakePayment /></Layout>} />
+      <Route path="/services/individual-verification" element={withLayout(PersonalInfo)} />
+      <Route path="/services/business-verification" element={withLayout(BusinessDashboard)} />
+      <Route path="/services/rapid-verification" element={withLayout(VerificationProcess)} />
+      <Route path="/services/document-authentication" element={withLayout(DocumentUpload)} />
+      <Route path="/make-payments" element={withLayout(MakePayment)} />
 
       {/* Redirect Routes */}
       <Route path="/Dashboard" element={<Navigate to="/dashboard" replace />} />
       
-      {/* 404 Not Found Route
-      <Route path="*" element={<Navigate to="/" replace />} />
-       */}
       {/* Test Routes */}
-      <Route path="/document-verification-test" element={<Layout><DocumentVerificationTest /></Layout>} />
-      <Route path="*" element={<Navigate to="/Welcome" replace />} />
+      <Route path="/document-verification-test" element={withLayout(DocumentVerificationTest)} />
+      <Route path="/profile" element={<Layout><Profile /></Layout>} />
+      <Route path="*" element={<Navigate to="/welcome" replace />} />
     </Routes>
   );
 };

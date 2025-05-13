@@ -18,11 +18,16 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/kyc-syste
   .catch(err => console.error('MongoDB connection error:', err));
 
 // User model
+// Update the User model
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, default: 'user' },
+  phone: { type: String },
+  address: { type: String },
+  company: { type: String },
+  position: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -127,6 +132,72 @@ app.post('/api/auth/forgot-password', async (req, res) => {
     // For demo purposes, we'll just return success
     
     res.status(200).json({ message: 'If your email is registered, you will receive a password reset link' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Middleware to verify JWT token
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) return res.status(401).json({ message: 'Access denied' });
+  
+  jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret', (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid or expired token' });
+    req.user = user;
+    next();
+  });
+};
+
+// User profile routes
+app.get('/api/users/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.put('/api/users/profile', authenticateToken, async (req, res) => {
+  try {
+    const { name, email, phone, address, company, position } = req.body;
+    
+    // Find user and update
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    // Update fields
+    if (name) user.name = name;
+    if (email && email !== user.email) {
+      // Check if email is already in use
+      const existingUser = await User.findOne({ email });
+      if (existingUser && existingUser._id.toString() !== req.user.id) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+      user.email = email;
+    }
+    
+    // Update additional fields
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
+    user.company = company || user.company;
+    user.position = position || user.position;
+    
+    await user.save();
+    
+    // Return updated user without password
+    const updatedUser = await User.findById(req.user.id).select('-password');
+    res.json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
