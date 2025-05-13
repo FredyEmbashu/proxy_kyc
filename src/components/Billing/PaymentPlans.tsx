@@ -45,7 +45,7 @@ const plans = [
   },
 ];
 
-const PricingPage: React.FC = () => {
+const PricingAndPlans: React.FC = () => {
   const navigate = useNavigate();
 
   const handleChoosePlan = (planName: string) => {
@@ -218,10 +218,10 @@ const PricingPage: React.FC = () => {
 //   );
 // };
 
-const PricingAndPlans: React.FC = () => {
+const PricingPage: React.FC = () => {
   return (
     <Box>
-      <PricingPage />
+      <PricingAndPlans/>
       {/* PaymentPlans component removed */}
     </Box>
   );
