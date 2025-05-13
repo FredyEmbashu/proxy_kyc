@@ -44,7 +44,7 @@ const ForgotPassword: React.FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 64px)', // Adjust for header height
         bgcolor: 'background.default',
         p: 2
       }}
@@ -55,6 +55,7 @@ const ForgotPassword: React.FC = () => {
           p: 4,
           maxWidth: 400,
           width: '100%',
+          borderRadius: 2
         }}
       >
         <Box sx={{ textAlign: 'center', mb: 4 }}>
@@ -98,13 +99,15 @@ const ForgotPassword: React.FC = () => {
               margin="normal"
               required
               disabled={loading}
+              autoFocus
+              placeholder="Enter your registered email"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={loading}
+              disabled={loading || !email}
             >
               {loading ? <CircularProgress size={24} /> : 'Reset Password'}
             </Button>
