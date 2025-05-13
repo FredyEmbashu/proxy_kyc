@@ -1,0 +1,3 @@
+[submodule "KYC"]
+	path = KYC
+	url = https://github.com/FredyEmbashu/proxy_kyc.git
