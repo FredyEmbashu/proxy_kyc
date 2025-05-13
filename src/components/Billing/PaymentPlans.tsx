@@ -50,7 +50,8 @@ const PricingPage: React.FC = () => {
 
   const handleChoosePlan = (planName: string) => {
     console.log(`Selected plan: ${planName}`);
-    navigate('/make-payments', { state: { plan: planName } });
+    // Updated to use the correct route path
+    navigate('/make-payment', { state: { plan: planName } });
   };
 
   return (
