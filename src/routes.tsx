@@ -140,7 +140,7 @@ const AppRoutes: React.FC = () => {
       {/* Test Routes */}
       <Route path="/document-verification-test" element={withLayout(DocumentVerificationTest)} />
       <Route path="/profile" element={<Layout><Profile /></Layout>} />
-      <Route path="*" element={<Navigate to="/welcome" replace />} />
+      {/* <Route path="*" element={<Navigate to="/welcome" replace />} /> */}
     </Routes>
   );
 };
