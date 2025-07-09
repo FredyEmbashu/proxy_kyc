@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  CircularProgress,
-  Alert,
-  Link,
-  Divider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  Box, Paper, Typography, TextField, Button, CircularProgress, Alert,
+  Link, Divider, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
 import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 import { authService } from '../../services/authService';
@@ -37,21 +26,20 @@ const Login: React.FC = () => {
     try {
       const result = await authService.login(email, password);
       if (result.success) {
-        // Store account type preference
+        const user = result.user;
+
+        // Store user/token for demo purposes
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('preferredAccountType', accountType);
-        
-        // Check if there's a redirect path from the location state
-        const from = location.state?.from || '/dashboard';
-        
-        // Check if there was a selected plan before login
-        const selectedPlan = sessionStorage.getItem('selectedPlan');
-        if (selectedPlan) {
-          sessionStorage.removeItem('selectedPlan');
-          // Redirect to payment page with the selected plan
-          navigate('/make-payment', { state: { planId: selectedPlan } });
+
+        // Redirect based on role and account type
+        if (user.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else if (user.accountType === 'business') {
+          navigate('/business-dashboard');
         } else {
-          // Otherwise, redirect to the intended destination
-          navigate(from);
+          navigate('/dashboard');
         }
       } else {
         setError(result.message || 'Login failed');
@@ -84,7 +72,7 @@ const Login: React.FC = () => {
       >
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Insight Namibia 
+            Insight Namibia
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Secure Identity Verification for Namibian Individuals and/or Businesses
@@ -111,7 +99,7 @@ const Login: React.FC = () => {
               <MenuItem value="business">Business</MenuItem>
             </Select>
           </FormControl>
-          
+
           <TextField
             fullWidth
             label="Email Address"
@@ -150,15 +138,15 @@ const Login: React.FC = () => {
         </Box>
 
         <Divider sx={{ my: 3 }} />
-        
+
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" gutterBottom>
             Don't have an account?
           </Typography>
-          <Button 
-            component={RouterLink} 
+          <Button
+            component={RouterLink}
             to="/pricing-plans"
-            variant="outlined" 
+            variant="outlined"
             fullWidth
             sx={{ mt: 1 }}
           >
