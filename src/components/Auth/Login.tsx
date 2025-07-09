@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         localStorage.setItem('preferredAccountType', accountType);
 
         // Redirect based on role and account type
-        if (user.role === 'admin') {
+        if (user.role === 'user') {
           navigate('/admin-dashboard');
         } else if (user.accountType === 'business') {
           navigate('/business-dashboard');
