@@ -6,7 +6,7 @@ import {
 import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 import { authService } from '../../services/authService';
 import HomeButton from '../common/HomeButton';
-
+import SignUp from './SignUp';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
