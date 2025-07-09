@@ -33,11 +33,11 @@ const Login: React.FC = () => {
 
         // Navigate to appropriate dashboard
         if (user.role === 'admin') {
-          navigate('./Admin/AdminDashboard');
+          navigate('/dashboard');
         } else if (user.accountType === 'business') {
-          navigate('./Business/BusinessDashboard');
+          navigate('/business-dashboard');
         } else {
-          navigate('./Dashboard/Dashboard');
+          navigate('/admin-dashboard');
         }
       } else {
         setError(result.message || 'Login failed');
@@ -50,6 +50,8 @@ const Login: React.FC = () => {
     }
   };
 
+
+  
   return (
     <Box
       sx={{
