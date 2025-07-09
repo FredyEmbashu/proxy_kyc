@@ -28,13 +28,13 @@ const Login: React.FC = () => {
       if (result.success) {
         const user = result.user;
 
-        // Store user/token for demo purposes
+        // Save token + user for persistent login
         localStorage.setItem('token', result.token);
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('preferredAccountType', accountType);
 
-        // Redirect based on role and account type
-        if (user.role === 'user') {
+        // Redirect based on role + account type
+        if (user.role === 'admin') {
           navigate('/admin-dashboard');
         } else if (user.accountType === 'business') {
           navigate('/business-dashboard');
@@ -45,6 +45,7 @@ const Login: React.FC = () => {
         setError(result.message || 'Login failed');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('An error occurred during login');
     } finally {
       setLoading(false);
