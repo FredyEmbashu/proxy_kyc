@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../services/api';
 
 interface User {
   id: string;
@@ -28,27 +27,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkAuth = async () => {
     try {
-      const token = localStorage.getItem('auth_token');
-      if (token) {
-        const response = await api.get('/auth/me');
-        setUser(response.data);
+      const token = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+      if (token && storedUser) {
+        setUser(JSON.parse(storedUser));
       }
     } catch (error) {
-      localStorage.removeItem('auth_token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     } finally {
       setLoading(false);
     }
   };
 
   const login = async (email: string, password: string) => {
-    const response = await api.post('/auth/login', { email, password });
-    const { token, user } = response.data;
-    localStorage.setItem('auth_token', token);
-    setUser(user);
+    // Simulate login for demo purposes
+    const demoUsers = [
+      {
+        email: 'admin@example.com',
+        password: 'password123',
+        user: {
+          id: '1',
+          email: 'admin@example.com',
+          role: 'admin',
+          name: 'Admin User',
+        },
+        token: 'demo-token-xyz'
+      },
+      {
+        email: 'user@example.com',
+        password: 'password123',
+        user: {
+          id: '2',
+          email: 'user@example.com',
+          role: 'client',
+          name: 'Regular User',
+        },
+        token: 'demo-token-abc'
+      },
+      {
+        email: 'business@example.com',
+        password: 'password123',
+        user: {
+          id: '3',
+          email: 'business@example.com',
+          role: 'business',
+          name: 'Business User',
+        },
+        token: 'demo-token-def'
+      }
+    ];
+
+    const match = demoUsers.find(u => u.email === email && u.password === password);
+    if (!match) throw new Error('Invalid credentials');
+
+    localStorage.setItem('token', match.token);
+    localStorage.setItem('user', JSON.stringify(match.user));
+    setUser(match.user);
   };
 
   const logout = () => {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     window.location.href = '/login';
   };
