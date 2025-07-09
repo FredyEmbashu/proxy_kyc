@@ -9,7 +9,7 @@ import './App.css';
 function App() {
   useEffect(() => {
     // Update document title
-    document.title = 'Proxy KYC - Secure Identity Verification';
+    document.title = 'Namibia KYC - Secure Identity Verification';
   }, []);
 
   return (
