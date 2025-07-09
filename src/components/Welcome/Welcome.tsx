@@ -240,7 +240,7 @@ const Welcome = () => {
                 color="secondary" 
                 size="large"
                 startIcon={<VerifiedUserIcon />}
-                onClick={() => handleNavigation('/payment-plans')}
+                onClick={() => handleNavigation('/SignUp')}
                 sx={{ 
                   py: 1.5, 
                   px: 4,
