@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 import Layout from '../components/Layout/Layout';
 import Login from '../components/Auth/Login';
@@ -10,71 +9,29 @@ import AdminDashboard from '../components/Admin/AdminDashboard';
 import PersonalInfo from '../components/KYC/PersonalInfo';
 import DocumentUpload from '../components/KYC/DocumentUpload';
 import FaceCapture from '../components/KYC/FaceCapture';
-// TODO: Import VerificationComplete component once implemented
+
+// Placeholder for VerificationComplete
 const VerificationComplete = () => <div>Verification Complete</div>;
-
-const ProtectedRoute: React.FC<{ children: React.ReactNode; role?: string }> = ({ 
-  children, 
-  role 
-}) => {
-  const { isAuthenticated, user } = useAuth();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/ClientDashboard" />;
-  }
-
-  if (role && user?.role !== role) {
-    return <Navigate to="/ClientDashboard" />;
-  }
-
-  return <>{children}</>;
-};
 
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
+      {/* Public Login Route */}
       <Route path="/login" element={<Login />} />
-      
-      {/* Client Routes */}
-      <Route path="/verify" element={
-        <ProtectedRoute role="client">
-          <Layout>
-            <Routes>
-              <Route path="personal" element={<PersonalInfo />} />
-              <Route path="documents" element={<DocumentUpload />} />
-              <Route path="face" element={<FaceCapture onCapture={async (image) => {}} />} />
-              <Route path="complete" element={<VerificationComplete />} />
-            </Routes>
-          </Layout>
-        </ProtectedRoute>
-      } />
 
-      {/* Business Routes */}
-      <Route path="/business" element={
-        <ProtectedRoute role="business">
-          <Layout>
-            <BusinessDashboard />
-          </Layout>
-        </ProtectedRoute>
-      } />
+      {/* Client Verification Steps (accessible to all) */}
+      <Route path="/verify/personal" element={<Layout><PersonalInfo /></Layout>} />
+      <Route path="/verify/documents" element={<Layout><DocumentUpload /></Layout>} />
+      <Route path="/verify/face" element={<Layout><FaceCapture onCapture={async (image) => {}} /></Layout>} />
+      <Route path="/verify/complete" element={<Layout><VerificationComplete /></Layout>} />
 
-      {/* Admin Routes */}
-      <Route path="/admin" element={
-        <ProtectedRoute role="admin">
-          <Layout>
-            <AdminDashboard />
-          </Layout>
-        </ProtectedRoute>
-      } />
+      {/* Dashboards (open access) */}
+      <Route path="/business" element={<Layout><BusinessDashboard /></Layout>} />
+      <Route path="/admin" element={<Layout><AdminDashboard /></Layout>} />
+      <Route path="/" element={<Layout><ClientDashboard /></Layout>} />
 
-      {/* Default Routes */}
-      <Route path="/" element={
-        <ProtectedRoute>
-          <Layout>
-            <ClientDashboard />
-          </Layout>
-        </ProtectedRoute>
-      } />
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
