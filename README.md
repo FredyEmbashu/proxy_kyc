@@ -3,11 +3,34 @@
 ## Research Overview
 This project is part of a Master's thesis research at Namibia University of Science and Technology (NUST) by Fredy Lineekela Embashu, focusing on developing an AI-enhanced Know Your Customer (KYC) system specifically designed for Namibian microlenders.
 
-### Research Objectives
-1. To develop an efficient and accurate KYC verification system using AI technologies
-2. To reduce verification time and costs for microlenders
-3. To improve accessibility to financial services in Namibia
-4. To ensure compliance with local regulations while maintaining user privacy
+**Research Aims and Objectives**
+
+This research aims to develop a comprehensive understanding of the practical strategies and implications associated with adopting an AI-driven KYC solutions and further develop a prototype streamlining KYC for a microlender in Namibia.
+
+**Main Research Objective:**
+
+   Develop an AI-driven prototype that streamlines KYC for a microlender.
+
+**Sub Research Objectives:**
+
+1.	Identify the challenges micro-lenders face when transitioning from manual to digital platforms for KYC.
+2.	Explore the practical implementation of AI and machine learning technologies in streamlining the KYC processes for microlenders.
+3.	Assess the tangible benefits associated with the adoption of AI-driven solutions for KYC compliance in Namibia's micro-lending industry.
+4.	Provide practical recommendations and strategies for micro-lenders in Namibia to successfully implement and leverage AI-driven solutions for KYC in their digital transformation efforts.
+
+**Research Questions**
+
+**Main Research Question:**
+
+How does an AI-Driven prototype streamline KYC compliance for a micro-lender?
+
+**Sub Research Questions:**
+
+1.	What are the specific operational challenges micro-lenders face when transitioning from manual to digital platforms for KYC compliance?
+2.	How can AI and machine learning be practically implemented to streamline and automate KYC processes for micro-lenders in Namibia?
+3.	What are the real-world implications of adopting AI-driven solutions for KYC compliance in Namibia's micro-lending industry?
+4.	What is the practical strategy and actionable recommendation for micro-lenders in Namibia to successfully implement and leverage AI-driven solutions for KYC compliance in their digital transformation efforts?
+
 
 ## Technical Implementation
 
