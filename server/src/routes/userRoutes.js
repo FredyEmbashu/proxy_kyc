@@ -7,17 +7,16 @@ const {
   updateUserProfile, 
   getAllUsers 
 } = require('../controllers/userController');
-const { protect, admin } = require('../middleware/authMiddleware');
 
-// Public routes
+// Public routes (no change)
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 
-// Protected routes
-router.get('/profile', protect, getUserProfile);
-router.put('/profile', protect, updateUserProfile);
+// Open access routes - no authentication middleware
+router.get('/profile', getUserProfile);
+router.put('/profile', updateUserProfile);
 
-// Admin routes
-router.get('/', protect, admin, getAllUsers);
+// Admin routes - now open to everyone (be careful)
+router.get('/', getAllUsers);
 
 module.exports = router;
