@@ -33,11 +33,11 @@ const Login: React.FC = () => {
 
         // Navigate to appropriate dashboard
         if (user.role === 'admin') {
-          navigate('/admin');
+          navigate('./Admin/AdminDashboard');
         } else if (user.accountType === 'business') {
-          navigate('/business');
+          navigate('./Business/BusinessDashboard');
         } else {
-          navigate('/');
+          navigate('./Dashboard/Dashboard');
         }
       } else {
         setError(result.message || 'Login failed');
@@ -137,7 +137,7 @@ const Login: React.FC = () => {
           </Typography>
           <Button
             component={RouterLink}
-            to="/signup"
+            to="./SignUp"
             variant="outlined"
             fullWidth
             sx={{ mt: 1 }}
@@ -150,4 +150,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+
