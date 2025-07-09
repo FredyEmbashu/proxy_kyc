@@ -144,7 +144,7 @@ const About = () => {
             border: '1px solid rgba(0,0,0,0.08)'
           }}>
             <Typography variant="body1" paragraph>
-              Founded in 2020, Insights Namibia emerged from a recognition of the growing need for robust identity 
+              Founded in 2025, Insights Namibia emerged from a recognition of the growing need for robust identity 
               verification solutions in Namibia's rapidly digitalizing economy. Our founders, with backgrounds in 
               cybersecurity and financial technology, saw an opportunity to address the challenges faced by businesses 
               in complying with KYC regulations while providing seamless user experiences.
