@@ -20,11 +20,11 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; role?: string }> = (
   const { isAuthenticated, user } = useAuth();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/ClientDashboard" />;
   }
 
   if (role && user?.role !== role) {
-    return <Navigate to="/" />;
+    return <Navigate to="/ClientDashboard" />;
   }
 
   return <>{children}</>;
