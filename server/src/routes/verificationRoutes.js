@@ -8,16 +8,15 @@ const {
   getAllVerifications,
   getVerificationStats
 } = require('../controllers/verificationController');
-const { protect, admin } = require('../middleware/authMiddleware');
 
-// User routes
-router.post('/', protect, createVerification);
-router.get('/user', protect, getUserVerifications);
-router.get('/:id', protect, getVerificationById);
+// User routes - no auth now
+router.post('/', createVerification);
+router.get('/user', getUserVerifications);
+router.get('/:id', getVerificationById);
 
-// Admin routes
-router.get('/', protect, admin, getAllVerifications);
-router.put('/:id', protect, admin, updateVerification);
-router.get('/stats/dashboard', protect, admin, getVerificationStats);
+// Admin routes - no auth now
+router.get('/', getAllVerifications);
+router.put('/:id', updateVerification);
+router.get('/stats/dashboard', getVerificationStats);
 
 module.exports = router;
