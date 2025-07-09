@@ -3,13 +3,11 @@ import {
   Box, Paper, Typography, TextField, Button, CircularProgress, Alert,
   Link, Divider, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
-import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { authService } from '../../services/authService';
-import HomeButton from '../common/HomeButton';
-import SignUp from './SignUp';
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [accountType, setAccountType] = useState<'individual' | 'business'>('individual');
@@ -25,21 +23,21 @@ const Login: React.FC = () => {
 
     try {
       const result = await authService.login(email, password);
-      if (result.success) {
+      if (result.success && result.user) {
         const user = result.user;
 
-        // Save token + user for persistent login
-        localStorage.setItem('token', result.token);
+        // Store login info
+        localStorage.setItem('auth_token', result.token!);
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('preferredAccountType', accountType);
 
-        // Redirect based on role + account type
+        // Navigate to appropriate dashboard
         if (user.role === 'admin') {
-          navigate('/admin-dashboard');
+          navigate('/admin');
         } else if (user.accountType === 'business') {
-          navigate('/business-dashboard');
+          navigate('/business');
         } else {
-          navigate('/dashboard');
+          navigate('/');
         }
       } else {
         setError(result.message || 'Login failed');
@@ -63,16 +61,9 @@ const Login: React.FC = () => {
         p: 2
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          maxWidth: 400,
-          width: '100%',
-        }}
-      >
+      <Paper elevation={3} sx={{ p: 4, maxWidth: 400, width: '100%' }}>
         <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Insight Namibia
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -145,7 +136,8 @@ const Login: React.FC = () => {
             Don't have an account?
           </Typography>
           <Button
-            component={RouterLink}  to="/signup"
+            component={RouterLink}
+            to="/signup"
             variant="outlined"
             fullWidth
             sx={{ mt: 1 }}
@@ -158,4 +150,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default LogIn;
+export default Login;
