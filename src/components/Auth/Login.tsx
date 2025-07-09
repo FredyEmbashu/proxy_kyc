@@ -145,8 +145,7 @@ const Login: React.FC = () => {
             Don't have an account?
           </Typography>
           <Button
-            component={RouterLink}
-            to="/SignUp"
+            component={RouterLink}  to="/signup"
             variant="outlined"
             fullWidth
             sx={{ mt: 1 }}
