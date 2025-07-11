@@ -1,0 +1,7 @@
+deployment:
+  tasks:
+    - export NODE_ENV=production
+    - npm install
+    - npm run build
+    - rm -rf /home/proxygroup/public_html2/*
+    - cp -R build/* /home/proxygroup/public_html2/
