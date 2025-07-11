@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     localStorage.setItem('token', match.token);
     localStorage.setItem('user', JSON.stringify(match.user));
-    setUser(match.user);
+    setUser(match.user as User);
   };
 
   const logout = () => {
