@@ -182,7 +182,6 @@ const Header: React.FC = () => {
                 </Button>
               </Box>
             )}
-            // Add this to your navigation links in the Header component
             {user && user.role === 'admin' && (
               <Button
                 color="inherit"

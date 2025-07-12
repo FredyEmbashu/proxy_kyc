@@ -63,7 +63,6 @@ class AuthService {
   private user: User | null = null;
 
   constructor() {
-    // Initialize from localStorage
     this.token = localStorage.getItem('auth_token');
     const userStr = localStorage.getItem('user');
     if (userStr) {
@@ -78,7 +77,6 @@ class AuthService {
 
   async login(email: string, password: string): Promise<LoginResponse> {
     try {
-      // Simulate API call for demo
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       let token = '';
@@ -121,7 +119,6 @@ class AuthService {
         };
       }
 
-      // Store to localStorage
       this.token = token;
       this.user = user;
       localStorage.setItem('auth_token', token);
@@ -186,6 +183,27 @@ class AuthService {
 
   getToken(): string | null {
     return this.token;
+  }
+
+  async selectPlan(planId: string): Promise<{ success: boolean; redirectUrl?: string; message?: string }> {
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simulated delay
+
+    if (!this.token || !this.user) {
+      return {
+        success: false,
+        redirectUrl: '/login',
+        message: 'User not authenticated',
+      };
+    }
+
+    console.log(`Plan selected: ${planId}`);
+    localStorage.setItem('selected_plan', planId);
+
+    return {
+      success: true,
+      redirectUrl: '/dashboard',
+      message: 'Plan selection successful',
+    };
   }
 }
 
